@@ -1,0 +1,23 @@
+{
+  "name": "nem-c/simplytics",
+  "description": "[Laravel 4 Simple Standalone Analytics Library",
+  "keywords"    : ["laravel", "analytics", "simple", "simplytics"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nem C",
+      "email": "me@nemc.io",
+      "homepage": "http://www.nemc.io/github",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "NemC\\Simplytics\\": "src/Simplytics"
+    }
+  }
+}
