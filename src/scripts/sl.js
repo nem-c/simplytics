@@ -12,9 +12,6 @@
 
     imE.src = imD + '?' + imQS;
 
-    console.log(imD);
-    console.log(imQS);
-
     function cb() {
         u = {};
         u.p = 'http';

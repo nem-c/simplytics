@@ -23,7 +23,7 @@ class VisitMetaModel extends Model
     {
         $allowedValues = Config::get('simplytics.allowed_meta');
         if (in_array($value, $allowedValues) === false) {
-            throw new UnsupportedMetaNameException(sprintf('""%s" is not in list of allowed meta properties'));
+            throw new UnsupportedMetaNameException(sprintf('"%s" is not in list of allowed meta properties', $value));
         }
         $this->attributes['meta_name'] = $value;
     }
