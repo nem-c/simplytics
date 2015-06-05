@@ -4,7 +4,9 @@ namespace NemC\Simplytics\Controllers;
 
 use Illuminate\Support\Facades\Response,
     Illuminate\Routing\Controller,
-    NemC\Simplytics\Services\StoreService;
+    NemC\Simplytics\DomainServices\StoreService,
+    NemC\Simplytics\Facades\GifResponse,
+    NemC\Simplytics\Facades\JavaScriptResponse;
 
 class SimplyticsController extends Controller
 {
@@ -16,17 +18,17 @@ class SimplyticsController extends Controller
     }
     public function index()
     {
-         return Response::make(json_encode('Simplytics for Laravel 4'), 200)->header('Content-Type', 'application/json');
+         return Response::json('Simplytics for Laravel 4');
     }
 
     public function store()
     {
         $this->storeService->execute();
-        return Response::make(base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'), 200)->header('Content-Type', 'image/gif');
+        return GifResponse::make1pxTransparent();
     }
 
     public function script()
     {
-        return Response::make(file_get_contents(dirname(__FILE__) . '/../../scripts/sl.js'), 200)->header('Content-Type', 'text/javascript');
+        return JavaScriptResponse::make(file_get_contents(dirname(__FILE__) . '/../../scripts/sl.js'));
     }
 }

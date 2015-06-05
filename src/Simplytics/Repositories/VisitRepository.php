@@ -2,6 +2,7 @@
 
 namespace NemC\Simplytics\Repositories;
 
+use Illuminate\Support\Facades\Response;
 use NemC\Simplytics\Models\VisitModel as Model;
 
 class VisitRepository implements VisitInterface

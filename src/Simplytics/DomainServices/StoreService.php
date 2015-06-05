@@ -1,6 +1,6 @@
 <?php
 
-namespace NemC\Simplytics\Services;
+namespace NemC\Simplytics\DomainServices;
 
 use Illuminate\Support\Facades\Request,
     Illuminate\Support\Facades\Config,
@@ -53,7 +53,7 @@ class StoreService
             $this->visitMetaRepo->storeClick($visit, $metaClickObject, $metaClickId);
         }
         if (empty($metaViewObject) === false && in_array($metaViewObject, $this->config['allowed_meta']) === true) {
-            $this->storeViews($visit, $metaViewObject, $metaViewIds);
+            $this->storeImpressions($visit, $metaViewObject, $metaViewIds);
         }
     }
 
@@ -68,11 +68,11 @@ class StoreService
         return $device;
     }
 
-    protected function storeViews(VisitModel $visit, $object, $ids)
+    protected function storeImpressions(VisitModel $visit, $object, $ids)
     {
         $ids = json_decode($ids);
         foreach ($ids as $id) {
-            $this->visitMetaRepo->storeView($visit, $object, $id);
+            $this->visitMetaRepo->storeImpression($visit, $object, $id);
         }
     }
 

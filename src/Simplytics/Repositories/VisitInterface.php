@@ -13,5 +13,6 @@ interface VisitInterface
     const SOURCE_API_FEEDER = 4;
 
     public function store($data);
+
     public function createTable();
 }
