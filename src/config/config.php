@@ -4,5 +4,6 @@ return [
     'allowed_meta' => [
         'auction',
         'auctioneer',
+        'featured',
     ],
 ];

@@ -42,6 +42,17 @@ class VisitMetaRepository implements VisitMetaInterface
         return $meta;
     }
 
+    public function storeCustom(VisitModel $visit, $key, $value)
+    {
+        $meta = $this->store([
+            'visit_id' => $visit->id,
+            'event' => VisitMetaInterface::EVENT_CUSTOM,
+            'meta_name' => $key,
+            'meta_value' => $value,
+        ]);
+        return $meta;
+    }
+
     public function findAllClicks($filters = [])
     {
         return $this->findAll(VisitMetaInterface::EVENT_CLICK, $filters);

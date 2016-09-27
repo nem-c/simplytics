@@ -37,6 +37,8 @@ class StoreService
         $metaClickId = $this->request->input('slm_cid');
         $metaViewObject = $this->request->input('slm_va');
         $metaViewIds = $this->request->input('slm_vid');
+        $metaCustomFields = $this->request->input('slm_cf');
+        $metaCustomFieldValues = $this->request->input('slm_cfv');
 
         $visit = $this->visitRepo->store([
             'long_ip' => ip2long($ip),
@@ -51,10 +53,12 @@ class StoreService
 
         if (empty($metaClickObject) === false && in_array($metaClickObject, $this->config['allowed_meta']) === true) {
             $this->visitMetaRepo->storeClick($visit, $metaClickObject, $metaClickId);
+            $this->storeCustomFields($visit, $metaCustomFields, $metaCustomFieldValues);
         }
         if (empty($metaViewObject) === false && in_array($metaViewObject, $this->config['allowed_meta']) === true) {
             $this->storeImpressions($visit, $metaViewObject, $metaViewIds);
         }
+
     }
 
     protected function detectDevice($userAgent)
@@ -73,6 +77,20 @@ class StoreService
         $ids = json_decode($ids);
         foreach ($ids as $id) {
             $this->visitMetaRepo->storeImpression($visit, $object, $id);
+        }
+    }
+
+    protected function storeCustomFields(VisitModel $visit, $fields, $values)
+    {
+        if (is_array($fields) === true) {
+            foreach ($fields as $key => $field) {
+                if (isset($values[$key]) === true) {
+                    $value = $values[$key];
+                    if (in_array($field, $this->config['allowed_meta'])) {
+                        $this->visitMetaRepo->storeCustom($visit, $field, $value);
+                    }
+                }
+            }
         }
     }
 
