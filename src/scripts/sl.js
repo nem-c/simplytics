@@ -111,6 +111,7 @@ var Base64 = {
         u.u = '/simplytics/track/';
 
         if (iSN()) {
+            u.d = 'global';
             u.e = '.dev';
         }
         if (iSD()) {
@@ -193,8 +194,18 @@ var Base64 = {
         //trackView event
         if (typeof gV('_trackView') === 'object') {
             var tV = gV('_trackView');
-            qs.push('slm_va=' + tV[0]);
-            qs.push('slm_vid=' + '[' + tV[1].join(',') + ']');
+            if (Array.isArray(tV[0])) {
+                for (tVI in tV) {
+                    var tVS = tV[tVI];
+                    qs.push('slm_va[' + tVI + ']=' + tVS[0]);
+                    qs.push('slm_vid[' + tVI + ']=' + '[' + tVS[1].join(',') + ']');
+                }
+            } else {
+                if (Array.isArray(tV[1])) {
+                    qs.push('slm_va[0]=' + tV[0]);
+                    qs.push('slm_vid[0]=' + '[' + tV[1].join(',') + ']');
+                }
+            }
         }
 
         var hC = Base64.decode(window.location.hash.replace('#', ''));

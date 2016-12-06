@@ -35,8 +35,8 @@ class StoreService
 
         $metaClickObject = $this->request->input('slm_ca');
         $metaClickId = $this->request->input('slm_cid');
-        $metaViewObject = $this->request->input('slm_va');
-        $metaViewIds = $this->request->input('slm_vid');
+        $metaViewObjects = (array)$this->request->input('slm_va');
+        $metaViewObjectsIds = (array)$this->request->input('slm_vid');
         $metaCustomFields = $this->request->input('slm_cf');
         $metaCustomFieldValues = $this->request->input('slm_cfv');
 
@@ -55,10 +55,13 @@ class StoreService
             $this->visitMetaRepo->storeClick($visit, $metaClickObject, $metaClickId);
             $this->storeCustomFields($visit, $metaCustomFields, $metaCustomFieldValues);
         }
-        if (empty($metaViewObject) === false && in_array($metaViewObject, $this->config['allowed_meta']) === true) {
-            $this->storeImpressions($visit, $metaViewObject, $metaViewIds);
-        }
 
+        foreach ($metaViewObjects as $id => $metaViewObject) {
+            $metaViewIds = $metaViewObjectsIds[$id];
+            if (empty($metaViewObject) === false && in_array($metaViewObject, $this->config['allowed_meta']) === true) {
+                $this->storeImpressions($visit, $metaViewObject, $metaViewIds);
+            }
+        }
     }
 
     protected function detectDevice($userAgent)
