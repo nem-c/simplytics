@@ -103,8 +103,8 @@ var Base64 = {
 
     function cb() {
         u = {};
-        u.p = 'http';
-        u.s = '://'
+        u.p = '';
+        u.s = '//'
         u.pf = 'www.';
         u.d = 'globalauctionguide';
         u.e = '.com';
