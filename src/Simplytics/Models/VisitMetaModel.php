@@ -9,6 +9,7 @@ use NemC\Simplytics\Repositories\VisitMetaInterface;
 
 class VisitMetaModel extends Model
 {
+    protected $connection = 'simplytics';
     protected $table = 'simplytics_visit_meta';
     protected $primaryKey = null;
     public $incrementing = null;
