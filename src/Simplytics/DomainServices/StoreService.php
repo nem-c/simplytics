@@ -26,7 +26,18 @@ class StoreService
 
     public function execute()
     {
-        $ip = $this->request->getClientIp();
+        //detect various proxies and establish real IP
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) && empty($_SERVER["HTTP_CF_CONNECTING_IP"]) === false) {
+            $ip = trim($_SERVER["HTTP_CF_CONNECTING_IP"]);
+        } elseif (isset($_SERVER["HTTP_X_CLUSTER_CLIENT_IP"]) && $_SERVER["HTTP_X_CLUSTER_CLIENT_IP"] !== "") {
+            $ip = trim($_SERVER["HTTP_X_CLUSTER_CLIENT_IP"]);
+        } elseif (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) === true && empty($_SERVER["HTTP_X_FORWARDED_FOR"]) === false) {
+            $ips = $_SERVER["HTTP_X_FORWARDED_FOR"];
+            $ip  = trim(current(explode($clientIps, ",")));
+        } else {
+            $ip = $this->request->getClientIp();
+        }
+
         $cookie = $this->request->input('cid');
         $domain = $this->request->input('ds');
         $uri = $this->request->input('us');
