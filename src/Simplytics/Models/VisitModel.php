@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model,
 
 class VisitModel extends Model
 {
+    protected $connection = 'simplytics';
     protected $table = 'simplytics_visit';
     protected $primaryKey = 'id';
     public $timestamps = false;
