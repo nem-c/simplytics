@@ -3,7 +3,7 @@ Database migrations
 ```
 CREATE TABLE `simplytics_visit` (
 	`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`long_ip` INT(11) NULL DEFAULT NULL,
+	`long_ip` INT(11) UNSIGNED NULL DEFAULT NULL,
 	`cookie` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
 	`domain` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
 	`uri` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
