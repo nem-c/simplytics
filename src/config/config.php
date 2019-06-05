@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'allowed_meta' => [
-        'auction',
-        'auctioneer',
-        'featured',
-    ],
+    'allowed_meta' => [],
+    'connection' => 'mysql',
 ];
