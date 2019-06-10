@@ -102,6 +102,7 @@ class VisitMetaRepository implements VisitMetaInterface
         }
 
         $query->orderBy('id', 'desc');
+        $query->limit(25);
 
         return $query->get();
     }
