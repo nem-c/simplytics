@@ -2,11 +2,12 @@
 
 namespace NemC\Simplytics\Controllers;
 
-use Illuminate\Support\Facades\Response,
-    Illuminate\Routing\Controller,
-    NemC\Simplytics\DomainServices\StoreService,
-    NemC\Simplytics\Facades\GifResponse,
-    NemC\Simplytics\Facades\JavaScriptResponse;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Routing\Controller;
+use NemC\Simplytics\DomainServices\StoreService;
+use NemC\Simplytics\Facades\GifResponse;
+use NemC\Simplytics\Facades\JavaScriptResponse;
 
 class SimplyticsController extends Controller
 {
@@ -16,19 +17,29 @@ class SimplyticsController extends Controller
     {
         $this->storeService = $storeService;
     }
+
     public function index()
     {
-         return Response::json('Simplytics for Laravel 4');
+        return Response::json('Simplytics for Laravel 4');
     }
 
     public function store()
     {
         $this->storeService->execute();
+
         return GifResponse::make1pxTransparent();
     }
 
     public function script()
     {
-        return JavaScriptResponse::make(file_get_contents(dirname(__FILE__) . '/../../scripts/sl.js'));
+        $host = Config::get('simplytics.vars.domain');
+        $jsFileContent = file_get_contents(dirname(__FILE__) . '/../../scripts/sl.js');
+
+        if (empty($host) === false) {
+            $jsFileContent = "var slh = '{$host}';" . PHP_EOL . PHP_EOL . $jsFileContent;
+
+        }
+
+        return JavaScriptResponse::make();
     }
 }
