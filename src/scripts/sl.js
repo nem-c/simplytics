@@ -103,6 +103,11 @@ var Base64 = {
 
     function cb() {
         var d = p(window.location.href);
+        if (slh) {
+            var d = p(slh);
+        }
+        console.log(slh);
+        console.log(d);
         u = {};
         u.p = '';
         u.s = '//'
@@ -110,16 +115,6 @@ var Base64 = {
         u.d = d.host;
         u.e = '.' + d.tld;
         u.u = '/simplytics/track/';
-
-        if (iSN()) {
-            u.e = '.local';
-        }
-        if (iSD()) {
-            u.pf = 'dev.';
-        }
-        if (iSS()) {
-            u.pf = 'staging.'
-        }
 
         return jO(u);
 
@@ -240,14 +235,14 @@ var Base64 = {
         return m;
     }
 
-    function p(url){
+    function p(url) {
         parsed_url = {}
 
-        if ( url == null || url.length == 0 )
+        if (url == null || url.length == 0)
             return parsed_url;
 
         protocol_i = url.indexOf('://');
-        parsed_url.protocol = url.substr(0,protocol_i);
+        parsed_url.protocol = url.substr(0, protocol_i);
 
         remaining_url = url.substr(protocol_i + 3, url.length);
         domain_i = remaining_url.indexOf('/');
@@ -256,7 +251,7 @@ var Base64 = {
         parsed_url.path = domain_i == -1 || domain_i + 1 == remaining_url.length ? null : remaining_url.substr(domain_i + 1, remaining_url.length);
 
         domain_parts = parsed_url.domain.split('.');
-        switch ( domain_parts.length ){
+        switch (domain_parts.length) {
             case 2:
                 parsed_url.subdomain = null;
                 parsed_url.host = domain_parts[0];
