@@ -37,9 +37,8 @@ class SimplyticsController extends Controller
 
         if (empty($host) === false) {
             $jsFileContent = "var slh = '{$host}';" . PHP_EOL . PHP_EOL . $jsFileContent;
-
         }
 
-        return JavaScriptResponse::make();
+        return JavaScriptResponse::make($jsFileContent);
     }
 }
